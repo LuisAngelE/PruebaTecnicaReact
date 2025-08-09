@@ -25,7 +25,6 @@ const TipoArchivosState = ({ children }) => {
 
   const [state, dispatch] = useReducer(TipoArchivosReducer, initialState);
 
-  // Obtener todos los archivos
   const GetTipoArchivos = () => {
     let url = "/archivos";
     MethodGet(url)
@@ -41,7 +40,6 @@ const TipoArchivosState = ({ children }) => {
       });
   };
 
-  // Agregar un archivo
   const AddArchivo = (data) => {
     let url = "/archivos";
     MethodPost(url, data)
@@ -67,7 +65,6 @@ const TipoArchivosState = ({ children }) => {
       });
   };
 
-  // Modificar un archivo
   const ChangeArchivo = (data) => {
     let url = `/archivos/${data.id}`;
     MethodPut(url, data)
@@ -93,7 +90,6 @@ const TipoArchivosState = ({ children }) => {
       });
   };
 
-  // Eliminar un archivo
   const DeleteArchivo = (id) => {
     Swal.fire({
       title: "¿Estás seguro?",

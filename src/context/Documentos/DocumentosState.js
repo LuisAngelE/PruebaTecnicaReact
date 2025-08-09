@@ -21,7 +21,6 @@ const DocumentosState = ({ children }) => {
 
   const [state, dispatch] = useReducer(DocumentosReducer, initialState);
 
-  // Obtener todos los documentos
   const GetDocumentos = () => {
     let url = "/documentos";
     MethodGet(url)
@@ -37,7 +36,6 @@ const DocumentosState = ({ children }) => {
       });
   };
 
-  // Agregar un documento
   const AddDocumento = (data) => {
     let url = "/documentos";
     MethodPost(url, data)
@@ -63,7 +61,6 @@ const DocumentosState = ({ children }) => {
       });
   };
 
-  // Modificar un documento
   const ChangeDocumento = (data) => {
     let url = `/documentos/${data.id}`;
     MethodPut(url, data)
@@ -89,7 +86,6 @@ const DocumentosState = ({ children }) => {
       });
   };
 
-  // Eliminar un documento
   const DeleteDocumento = (id) => {
     Swal.fire({
       title: "¿Estás seguro?",

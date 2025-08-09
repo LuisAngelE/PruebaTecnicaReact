@@ -25,7 +25,6 @@ const AreasState = ({ children }) => {
 
   const [state, dispatch] = useReducer(AreasReducer, initialState);
 
-  // Obtener todas las áreas
   const GetAreas = () => {
     MethodGet("/areas")
       .then((res) => {
@@ -43,7 +42,6 @@ const AreasState = ({ children }) => {
       });
   };
 
-  // Agregar un área
   const AddArea = (data) => {
     MethodPost("/areas", data)
       .then((res) => {
@@ -68,7 +66,6 @@ const AreasState = ({ children }) => {
       });
   };
 
-  // Modificar un área
   const ChangeArea = (data) => {
     MethodPut(`/areas/${data.id}`, data)
       .then((res) => {
@@ -93,7 +90,6 @@ const AreasState = ({ children }) => {
       });
   };
 
-  // Eliminar un área
   const DeleteArea = (id) => {
     Swal.fire({
       title: "¿Estás seguro?",

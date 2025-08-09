@@ -1,1 +1,1 @@
-import '@testing-library/jest-dom'; // Importa las extensiones de jest-dom para facilitar pruebas en React
+import '@testing-library/jest-dom';

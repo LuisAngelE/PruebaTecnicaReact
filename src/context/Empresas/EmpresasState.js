@@ -25,7 +25,6 @@ const EmpresasState = ({ children }) => {
 
   const [state, dispatch] = useReducer(EmpresasReducer, initialState);
 
-  // Obtener todas las empresas
   const GetEmpresas = () => {
     let url = "/empresas";
     MethodGet(url)
@@ -41,7 +40,6 @@ const EmpresasState = ({ children }) => {
       });
   };
 
-  // Agregar una empresa
   const AddEmpresa = (data) => {
     let url = "/empresas";
     MethodPost(url, data)
@@ -67,7 +65,6 @@ const EmpresasState = ({ children }) => {
       });
   };
 
-  // Modificar una empresa
   const ChangeEmpresa = (data) => {
     let url = `/empresas/${data.id}`;
     MethodPut(url, data)
@@ -93,7 +90,6 @@ const EmpresasState = ({ children }) => {
       });
   };
 
-  // Eliminar una empresa
   const DeleteEmpresa = (id) => {
     Swal.fire({
       title: "¿Estás seguro?",

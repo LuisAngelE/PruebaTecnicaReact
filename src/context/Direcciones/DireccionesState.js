@@ -25,7 +25,6 @@ const DireccionesState = ({ children }) => {
 
   const [state, dispatch] = useReducer(DireccionesReducer, initialState);
 
-  // Obtener todas las direcciones
   const GetDirecciones = () => {
     MethodGet("/direcciones")
       .then((res) => {
@@ -43,7 +42,6 @@ const DireccionesState = ({ children }) => {
       });
   };
 
-  // Agregar una dirección
   const AddDireccion = (data) => {
     MethodPost("/direcciones", data)
       .then((res) => {
@@ -68,7 +66,6 @@ const DireccionesState = ({ children }) => {
       });
   };
 
-  // Modificar una dirección
   const ChangeDireccion = (data) => {
     MethodPut(`/direcciones/${data.id}`, data)
       .then((res) => {
@@ -93,7 +90,6 @@ const DireccionesState = ({ children }) => {
       });
   };
 
-  // Eliminar una dirección
   const DeleteDireccion = (id) => {
     Swal.fire({
       title: "¿Estás seguro?",

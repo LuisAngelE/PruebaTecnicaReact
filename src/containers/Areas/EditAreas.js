@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useEffect, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import MethodGet from "../../config/service";
-import AreasContext from "../../context/Areas/AreasContext"; // Cambiado a AreasContext
+import AreasContext from "../../context/Areas/AreasContext"; 
 import { MenuItem } from "@mui/material";
 
 export default function EditAreas({ open, handleClose, id, direcciones }) {

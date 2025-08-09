@@ -25,7 +25,6 @@ const CarpetasState = ({ children }) => {
 
   const [state, dispatch] = useReducer(CarpetasReducer, initialState);
 
-  // Obtener todas las carpetas
   const GetCarpetas = () => {
     let url = "/carpetas";
     MethodGet(url)
@@ -41,7 +40,6 @@ const CarpetasState = ({ children }) => {
       });
   };
 
-  // Agregar una carpeta
   const AddCarpeta = (data) => {
     let url = "/carpetas";
     MethodPost(url, data)
@@ -67,7 +65,6 @@ const CarpetasState = ({ children }) => {
       });
   };
 
-  // Modificar una carpeta
   const ChangeCarpeta = (data) => {
     let url = `/carpetas/${data.id}`;
     MethodPut(url, data)
@@ -93,7 +90,6 @@ const CarpetasState = ({ children }) => {
       });
   };
 
-  // Eliminar una carpeta
   const DeleteCarpeta = (id) => {
     Swal.fire({
       title: "¿Estás seguro?",
