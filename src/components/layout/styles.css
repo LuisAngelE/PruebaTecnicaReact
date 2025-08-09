@@ -1,0 +1,66 @@
+.box {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(9.2px);
+  -webkit-backdrop-filter: blur(9.2px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.header {
+  background-color: #662549;
+}
+#map iframe,
+#map object,
+#map embed {
+  max-width: 100%;
+  height: auto;
+}
+
+.center {
+  background: rgb(255, 183, 52);
+  background: radial-gradient(
+    circle,
+    rgba(255, 183, 52, 1) 10%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sppiner {
+  width: 200px;
+  height: 200px;
+  border: 5px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: #000000;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mySwiper {
+  height: 20%;
+  box-sizing: border-box;
+  padding: 10px 0;
+}
+.mySwiper .swiper-slide {
+  width: 25%;
+  height: 100%;
+  opacity: 0.4;
+}
+.mySwiper .swiper-slide-thumb-active {
+  opacity: 1;
+}
+.mySwiper2 {
+  height: 80%;
+  width: 100%;
+}
