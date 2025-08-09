@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
-import ArchivosContext from "./ArchivosContext";
-import ArchivosReducer from "./ArchivosReducer";
+import TipoArchivosContext from "./TipoArchivosContext";
+import TipoArchivosReducer from "./TipoArchivosReducer";
 import MethodGet, {
   MethodDelete,
   MethodPost,
@@ -15,7 +15,7 @@ import {
   SHOW_ERRORS_API,
 } from "../../types";
 
-const ArchivosState = ({ children }) => {
+const TipoArchivosState = ({ children }) => {
   const initialState = {
     archivos: [],
     archivo: null,
@@ -23,10 +23,10 @@ const ArchivosState = ({ children }) => {
     success: false,
   };
 
-  const [state, dispatch] = useReducer(ArchivosReducer, initialState);
+  const [state, dispatch] = useReducer(TipoArchivosReducer, initialState);
 
   // Obtener todos los archivos
-  const GetArchivos = () => {
+  const GetTipoArchivos = () => {
     let url = "/archivos";
     MethodGet(url)
       .then((res) => {
@@ -131,21 +131,21 @@ const ArchivosState = ({ children }) => {
   };
 
   return (
-    <ArchivosContext.Provider
+    <TipoArchivosContext.Provider
       value={{
         archivos: state.archivos,
         archivo: state.archivo,
         ErrorsApi: state.ErrorsApi,
         success: state.success,
-        GetArchivos,
+        GetTipoArchivos,
         AddArchivo,
         ChangeArchivo,
         DeleteArchivo,
       }}
     >
       {children}
-    </ArchivosContext.Provider>
+    </TipoArchivosContext.Provider>
   );
 };
 
-export default ArchivosState;
+export default TipoArchivosState;

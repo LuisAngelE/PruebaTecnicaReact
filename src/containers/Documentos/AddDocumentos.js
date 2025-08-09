@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { Grid, MenuItem, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
-import CarpetasContext from "../../context/Carpetas/CarpetasContext";
+import DocumentosContext from "../../context/Documentos/DocumentosContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -50,8 +50,8 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function AddCarpetas({ modal, handleClose, areas = [] }) {
-  const { AddCarpeta } = React.useContext(CarpetasContext);
+export default function AddDocumentos({ modal, handleClose, empresas = [] }) {
+  const { AddDocumento } = React.useContext(DocumentosContext);
 
   const {
     register,
@@ -62,19 +62,23 @@ export default function AddCarpetas({ modal, handleClose, areas = [] }) {
 
   const reset = () => {
     setValue("nombre", "", { shouldDirty: true });
-    setValue("area_id", "", { shouldDirty: true });
+    setValue("empresa_id", "", { shouldDirty: true });
   };
 
   const onSubmit = (data) => {
-    AddCarpeta(data);
+    AddDocumento(data);
     handleClose();
     reset();
   };
 
   return (
-    <BootstrapDialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={modal}>
+    <BootstrapDialog
+      onClose={handleClose}
+      aria-labelledby="customized-dialog-title"
+      open={modal}
+    >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Agregar Carpeta
+        Agregar Documento
       </BootstrapDialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -92,7 +96,7 @@ export default function AddCarpetas({ modal, handleClose, areas = [] }) {
                 fullWidth
                 name="nombre"
                 variant="outlined"
-                label="Nombre de la carpeta"
+                label="Nombre del documento"
                 {...register("nombre", {
                   required: "Este campo es requerido",
                   minLength: { value: 4, message: "Mínimo 4 caracteres" },
@@ -107,20 +111,20 @@ export default function AddCarpetas({ modal, handleClose, areas = [] }) {
               <TextField
                 select
                 fullWidth
-                label="Selecciona el área"
+                label="Selecciona la empresa"
                 defaultValue=""
-                {...register("area_id", {
-                  required: "Debes seleccionar un área",
+                {...register("empresa_id", {
+                  required: "Debes seleccionar una empresa",
                 })}
-                error={!!errors.area_id}
-                helperText={errors.area_id?.message}
+                error={!!errors.empresa_id}
+                helperText={errors.empresa_id?.message}
               >
                 <MenuItem value="">
-                  <em>-- Selecciona un área --</em>
+                  <em>-- Selecciona una empresa --</em>
                 </MenuItem>
-                {areas.map((area) => (
-                  <MenuItem key={area.id} value={area.id}>
-                    {area.nombre}
+                {empresas.map((empresa) => (
+                  <MenuItem key={empresa.id} value={empresa.id}>
+                    {empresa.nombre}
                   </MenuItem>
                 ))}
               </TextField>

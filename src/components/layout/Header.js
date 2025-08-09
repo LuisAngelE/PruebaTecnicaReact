@@ -130,7 +130,7 @@ export default function Header({ children }) {
     },
     {
       name: "Tipos de archivos",
-      value: "/Archivos",
+      value: "/TipoArchivos",
       icon: <InsertDriveFileIcon />,
     },
   ];

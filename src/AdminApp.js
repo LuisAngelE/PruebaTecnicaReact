@@ -5,10 +5,10 @@ import DireccionesState from "./context/Direcciones/DireccionesState";
 import AreasState from "./context/Areas/AreasState";
 import CarpetasState from "./context/Carpetas/CarpetasState";
 import DocumentosState from "./context/Documentos/DocumentosState";
-import ArchivosState from "./context/Archivos/ArchivosState";
+import TipoArchivosState from "./context/TipoArchivos/TipoArchivosState";
 function AdminApp() {
   return (
-    <ArchivosState>
+    <TipoArchivosState>
       <DocumentosState>
         <CarpetasState>
           <AreasState>
@@ -20,7 +20,7 @@ function AdminApp() {
           </AreasState>
         </CarpetasState>
       </DocumentosState>
-    </ArchivosState>
+    </TipoArchivosState>
   );
 }
 

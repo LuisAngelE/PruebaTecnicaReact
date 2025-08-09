@@ -5,7 +5,7 @@ import Direcciones from "../containers/Direcciones/Direcciones";
 import Areas from "../containers/Areas/Areas";
 import Carpetas from "../containers/Carpetas/Carpetas";
 import Documentos from "../containers/Documentos/Documentos";
-import Archivos from "../containers/Archivos/Archivos";
+import TipoArchivos from "../containers/TipoArchivos/TipoArchivos";
 
 const AdminRoutes = () => {
   return (
@@ -15,7 +15,7 @@ const AdminRoutes = () => {
       <Route exact path="/Areas" component={Areas} />
       <Route exact path="/Carpetas" component={Carpetas} />
       <Route exact path="/Documentos" component={Documentos} />
-      <Route exact path="/Archivos" component={Archivos} />
+      <Route exact path="/TipoArchivos" component={TipoArchivos} />
       {/* <Route exact path="/DetailVisits/:id" component={DetailVisits} /> */}
     </Switch>
   );

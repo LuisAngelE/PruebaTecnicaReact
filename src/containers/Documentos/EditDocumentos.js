@@ -8,12 +8,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useEffect, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import MethodGet from "../../config/service";
-import CarpetasContext from "../../context/Carpetas/CarpetasContext";
+import DocumentosContext from "../../context/Documentos/DocumentosContext";
 import { MenuItem } from "@mui/material";
 
-export default function EditCarpetas({ open, handleClose, id, empresas = [] }) {
-  const { ChangeCarpeta } = useContext(CarpetasContext);
-  const [carpeta, setCarpeta] = useState(null);
+export default function EditDocumentos({ open, handleClose, id, empresas = [] }) {
+  const { ChangeDocumento } = useContext(DocumentosContext);
+  const [documento, setDocumento] = useState(null);
 
   const {
     register,
@@ -24,9 +24,9 @@ export default function EditCarpetas({ open, handleClose, id, empresas = [] }) {
 
   useEffect(() => {
     if (!id) return;
-    MethodGet(`/carpetas/${id}`)
+    MethodGet(`/documentos/${id}`)
       .then((res) => {
-        setCarpeta(res.data);
+        setDocumento(res.data);
 
         setValue("nombre", res.data.nombre || "", { shouldDirty: true });
         setValue("empresa_id", res.data.empresa_id || "", { shouldDirty: true });
@@ -43,14 +43,14 @@ export default function EditCarpetas({ open, handleClose, id, empresas = [] }) {
 
   const onSubmit = (data) => {
     data.id = id;
-    ChangeCarpeta(data);
+    ChangeDocumento(data);
     handleClose();
     reset();
   };
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Editar Carpeta</DialogTitle>
+      <DialogTitle>Editar Documento</DialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
@@ -61,14 +61,14 @@ export default function EditCarpetas({ open, handleClose, id, empresas = [] }) {
         }}
       >
         <DialogContent>
-          {carpeta && (
+          {documento && (
             <>
               <TextField
                 type="text"
                 fullWidth
                 name="nombre"
                 variant="outlined"
-                label="Nombre de la carpeta"
+                label="Nombre del documento"
                 {...register("nombre", {
                   required: "Este campo es requerido",
                   minLength: { value: 4, message: "Mínimo 4 caracteres" },

@@ -1,25 +1,21 @@
 import { Button, Grid, Typography } from "@mui/material";
 import Layout from "../../components/layout/Layout";
-import DocumentosContext from "../../context/Documentos/DocumentosContext";
+import TipoArchivosContext from "../../context/TipoArchivos/TipoArchivosContext";
 import React, { useContext, useEffect } from "react";
-import TableDocumentos from "../../components/Tables/TableDocumentos";
-import AddDocumentos from "./AddDocumentos";
+import TableTipoArchivos from "../../components/Tables/TableTipoArchivos";
+import AddTipoArchivos from "./AddTipoArchivos";
 import EmpresasContext from "../../context/Empresas/EmpresasContext";
 
-const Documentos = () => {
-  const { documentos, GetDocumentos } = useContext(DocumentosContext);
+const TipoArchivos = () => {
+  const { tipoArchivos, GetTipoArchivos } = useContext(TipoArchivosContext);
   const { empresas, GetEmpresas } = useContext(EmpresasContext);
   const [openModal, setOpenModal] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpenModal(true);
-  };
-  const handleClose = () => {
-    setOpenModal(false);
-  };
+  const handleClickOpen = () => setOpenModal(true);
+  const handleClose = () => setOpenModal(false);
 
   useEffect(() => {
-    GetDocumentos();
+    GetTipoArchivos();
     GetEmpresas();
   }, []);
 
@@ -33,7 +29,7 @@ const Documentos = () => {
             variant="h5"
             sx={{ color: "black" }}
           >
-            Documentos
+            Tipo de Archivo
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={2} lg={2} xl={2}>
@@ -44,26 +40,19 @@ const Documentos = () => {
             sx={{
               color: "black",
               backgroundColor: "#ff8585",
-              "&:hover": {
-                color: "black",
-                backgroundColor: "#ff8585",
-              },
+              "&:hover": { color: "black", backgroundColor: "#ff8585" },
             }}
           >
             Agregar
           </Button>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <TableDocumentos documentos={documentos} />
+          <TableTipoArchivos tipoArchivos={tipoArchivos} />
         </Grid>
       </Grid>
-      <AddDocumentos
-        modal={openModal}
-        handleClose={handleClose}
-        empresas={empresas}
-      />
+      <AddTipoArchivos modal={openModal} handleClose={handleClose} empresas={empresas} />
     </Layout>
   );
 };
 
-export default Documentos;
+export default TipoArchivos;

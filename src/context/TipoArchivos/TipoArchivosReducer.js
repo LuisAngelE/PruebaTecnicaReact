@@ -5,7 +5,7 @@ import {
   DELETE_ARCHIVOS,
 } from "../../types/index";
 
-const ArchivosReducer = (state, action) => {
+const TipoArchivosReducer = (state, action) => {
   switch (action.type) {
     case GET_ALL_ARCHIVOS:
       return {
@@ -42,4 +42,4 @@ const ArchivosReducer = (state, action) => {
   }
 };
 
-export default ArchivosReducer;
+export default TipoArchivosReducer;

@@ -8,12 +8,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useEffect, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import MethodGet from "../../config/service";
-import CarpetasContext from "../../context/Carpetas/CarpetasContext";
+import TipoArchivosContext from "../../context/TipoArchivos/TipoArchivosContext";
 import { MenuItem } from "@mui/material";
 
-export default function EditCarpetas({ open, handleClose, id, empresas = [] }) {
-  const { ChangeCarpeta } = useContext(CarpetasContext);
-  const [carpeta, setCarpeta] = useState(null);
+export default function EditTipoArchivos({ open, handleClose, id, empresas = [] }) {
+  const { ChangeTipoArchivo } = useContext(TipoArchivosContext);
+  const [tipoArchivo, setTipoArchivo] = useState(null);
 
   const {
     register,
@@ -24,9 +24,9 @@ export default function EditCarpetas({ open, handleClose, id, empresas = [] }) {
 
   useEffect(() => {
     if (!id) return;
-    MethodGet(`/carpetas/${id}`)
+    MethodGet(`/tipo-archivos/${id}`)
       .then((res) => {
-        setCarpeta(res.data);
+        setTipoArchivo(res.data);
 
         setValue("nombre", res.data.nombre || "", { shouldDirty: true });
         setValue("empresa_id", res.data.empresa_id || "", { shouldDirty: true });
@@ -43,14 +43,14 @@ export default function EditCarpetas({ open, handleClose, id, empresas = [] }) {
 
   const onSubmit = (data) => {
     data.id = id;
-    ChangeCarpeta(data);
+    ChangeTipoArchivo(data);
     handleClose();
     reset();
   };
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Editar Carpeta</DialogTitle>
+      <DialogTitle>Editar Tipo de Archivo</DialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
@@ -61,14 +61,14 @@ export default function EditCarpetas({ open, handleClose, id, empresas = [] }) {
         }}
       >
         <DialogContent>
-          {carpeta && (
+          {tipoArchivo && (
             <>
               <TextField
                 type="text"
                 fullWidth
                 name="nombre"
                 variant="outlined"
-                label="Nombre de la carpeta"
+                label="Nombre del tipo de archivo"
                 {...register("nombre", {
                   required: "Este campo es requerido",
                   minLength: { value: 4, message: "Mínimo 4 caracteres" },
