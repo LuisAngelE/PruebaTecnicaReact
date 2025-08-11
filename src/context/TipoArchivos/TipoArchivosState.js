@@ -26,7 +26,7 @@ const TipoArchivosState = ({ children }) => {
   const [state, dispatch] = useReducer(TipoArchivosReducer, initialState);
 
   const GetTipoArchivos = () => {
-    let url = "/archivos";
+    let url = "/tipos-archivos";
     MethodGet(url)
       .then((res) => {
         dispatch({
@@ -41,7 +41,7 @@ const TipoArchivosState = ({ children }) => {
   };
 
   const AddArchivo = (data) => {
-    let url = "/archivos";
+    let url = "/tipos-archivos";
     MethodPost(url, data)
       .then((res) => {
         dispatch({
@@ -52,9 +52,8 @@ const TipoArchivosState = ({ children }) => {
           title: "Agregado",
           text: "Archivo agregado correctamente",
           icon: "success",
-        }).then(() => {
-          window.location.reload();
         });
+        GetTipoArchivos();
       })
       .catch((error) => {
         Swal.fire({
@@ -66,7 +65,7 @@ const TipoArchivosState = ({ children }) => {
   };
 
   const ChangeArchivo = (data) => {
-    let url = `/archivos/${data.id}`;
+    let url = `/tipos-archivos/${data.id}`;
     MethodPut(url, data)
       .then((res) => {
         dispatch({
@@ -77,9 +76,8 @@ const TipoArchivosState = ({ children }) => {
           title: "Archivo modificado",
           text: res.data.message,
           icon: "success",
-        }).then(() => {
-          window.location.reload();
         });
+        GetTipoArchivos();
       })
       .catch((error) => {
         Swal.fire({
@@ -102,7 +100,7 @@ const TipoArchivosState = ({ children }) => {
       cancelButtonText: "No, cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        let url = `/archivos/${id}`;
+        let url = `/tipos-archivos/${id}`;
         MethodDelete(url)
           .then((res) => {
             Swal.fire({

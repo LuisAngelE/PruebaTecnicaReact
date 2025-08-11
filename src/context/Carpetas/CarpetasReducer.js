@@ -23,13 +23,11 @@ const CarpetasReducer = (state, action) => {
       return {
         ...state,
         ErrorsApi: [],
-        carpetas: state.carpetas.map((carpeta) => {
-          if (carpeta.id === action.payload.id) {
-            return action.payload;
-          }
-          return carpeta;
-        }),
+        carpetas: state.carpetas.map((carpeta) =>
+          carpeta.id === action.payload.id ? action.payload : carpeta
+        ),
       };
+
     case DELETE_CARPETAS:
       return {
         ...state,

@@ -2,7 +2,7 @@ import clienteAxios from "./Axios";
 
 export default async function MethodGet(url, data) {
   return await clienteAxios.get(url, {
-    params: data, // Se envían los datos como parámetros en la URL
+    params: data, 
   });
 }
 

@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { Grid, MenuItem, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
-import AreasContext from "../../context/Areas/AreasContext"; 
+import AreasContext from "../../context/Areas/AreasContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {

@@ -23,12 +23,9 @@ const DocumentosReducer = (state, action) => {
       return {
         ...state,
         ErrorsApi: [],
-        documentos: state.documentos.map((documento) => {
-          if (documento.id === action.payload.id) {
-            return action.payload;
-          }
-          return documento;
-        }),
+        documentos: state.documentos.map((documento) =>
+          documento.id === action.payload.id ? action.payload : documento
+        ),
       };
     case DELETE_DOCUMENTOS:
       return {

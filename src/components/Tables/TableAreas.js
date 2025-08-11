@@ -92,33 +92,44 @@ export default function TableAreas({ areas }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {areas.map((area) => (
-              <StyledTableRow key={area.id}>
-                <StyledTableCell data-label="ID">{area.id}</StyledTableCell>
-                <StyledTableCell data-label="Nombre">
-                  {area.nombre}
-                </StyledTableCell>
-                <StyledTableCell data-label="Nombre">
-                  {area.direccion ? area.direccion.nombre : "Sin Dirección"}
-                </StyledTableCell>
-                <StyledTableCell data-label="Acciones">
-                  <IconButton
-                    size="small"
-                    onClick={() => handleClickOpen(area.id)}
-                  >
-                    <Tooltip title="Editar Área" placement="top">
-                      <EditIcon sx={{ color: "#e7a62f" }} />
-                    </Tooltip>
-                  </IconButton>
+            {areas.length > 0 ? (
+              areas.map((area) => (
+                <StyledTableRow key={area.id}>
+                  <StyledTableCell data-label="ID">{area.id}</StyledTableCell>
+                  <StyledTableCell data-label="Nombre">
+                    {area.nombre}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Dirección">
+                    {area.direccion ? area.direccion.nombre : "Sin Dirección"}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Acciones">
+                    <IconButton
+                      size="small"
+                      onClick={() => handleClickOpen(area.id)}
+                    >
+                      <Tooltip title="Editar Área" placement="top">
+                        <EditIcon sx={{ color: "#e7a62f" }} />
+                      </Tooltip>
+                    </IconButton>
 
-                  <IconButton size="small" onClick={() => DeleteArea(area.id)}>
-                    <Tooltip title="Eliminar Área" placement="top">
-                      <DeleteIcon sx={{ color: "#FF0000" }} />
-                    </Tooltip>
-                  </IconButton>
+                    <IconButton
+                      size="small"
+                      onClick={() => DeleteArea(area.id)}
+                    >
+                      <Tooltip title="Eliminar Área" placement="top">
+                        <DeleteIcon sx={{ color: "#FF0000" }} />
+                      </Tooltip>
+                    </IconButton>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))
+            ) : (
+              <TableRow>
+                <StyledTableCell colSpan={4} align="center">
+                  No hay áreas disponibles
                 </StyledTableCell>
-              </StyledTableRow>
-            ))}
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainerResponsive>

@@ -52,9 +52,8 @@ const EmpresasState = ({ children }) => {
           title: "Agregada",
           text: "Empresa agregada correctamente",
           icon: "success",
-        }).then(() => {
-          window.location.reload();
         });
+        GetEmpresas(); 
       })
       .catch((error) => {
         Swal.fire({
@@ -77,9 +76,8 @@ const EmpresasState = ({ children }) => {
           title: "Empresa modificada",
           text: res.data.message,
           icon: "success",
-        }).then(() => {
-          window.location.reload();
         });
+        GetEmpresas(); 
       })
       .catch((error) => {
         Swal.fire({

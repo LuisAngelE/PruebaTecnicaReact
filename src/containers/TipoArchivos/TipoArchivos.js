@@ -4,11 +4,9 @@ import TipoArchivosContext from "../../context/TipoArchivos/TipoArchivosContext"
 import React, { useContext, useEffect } from "react";
 import TableTipoArchivos from "../../components/Tables/TableTipoArchivos";
 import AddTipoArchivos from "./AddTipoArchivos";
-import EmpresasContext from "../../context/Empresas/EmpresasContext";
 
 const TipoArchivos = () => {
-  const { tipoArchivos, GetTipoArchivos } = useContext(TipoArchivosContext);
-  const { empresas, GetEmpresas } = useContext(EmpresasContext);
+  const { archivos, GetTipoArchivos } = useContext(TipoArchivosContext);
   const [openModal, setOpenModal] = React.useState(false);
 
   const handleClickOpen = () => setOpenModal(true);
@@ -16,7 +14,6 @@ const TipoArchivos = () => {
 
   useEffect(() => {
     GetTipoArchivos();
-    GetEmpresas();
   }, []);
 
   return (
@@ -47,10 +44,10 @@ const TipoArchivos = () => {
           </Button>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <TableTipoArchivos tipoArchivos={tipoArchivos} />
+          <TableTipoArchivos archivos={archivos} />
         </Grid>
       </Grid>
-      <AddTipoArchivos modal={openModal} handleClose={handleClose} empresas={empresas} />
+      <AddTipoArchivos modal={openModal} handleClose={handleClose} />
     </Layout>
   );
 };

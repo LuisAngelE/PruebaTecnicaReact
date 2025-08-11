@@ -50,7 +50,12 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function AddDocumentos({ modal, handleClose, empresas = [] }) {
+export default function AddDocumentos({
+  modal,
+  handleClose,
+  carpetas,
+  archivos = [],
+}) {
   const { AddDocumento } = React.useContext(DocumentosContext);
 
   const {
@@ -62,11 +67,21 @@ export default function AddDocumentos({ modal, handleClose, empresas = [] }) {
 
   const reset = () => {
     setValue("nombre", "", { shouldDirty: true });
-    setValue("empresa_id", "", { shouldDirty: true });
+    setValue("carpeta_id", "", { shouldDirty: true });
+    setValue("tipo_archivo_id", "", { shouldDirty: true });
+    setValue("archivo", "", { shouldDirty: true });
+    setValue("fecha_creacion", "", { shouldDirty: true });
   };
 
   const onSubmit = (data) => {
-    AddDocumento(data);
+    const formData = new FormData();
+    formData.append("archivo", data.archivo[0]);
+    formData.append("nombre", data.nombre);
+    formData.append("carpeta_id", data.carpeta_id);
+    formData.append("tipo_archivo_id", data.tipo_archivo_id);
+    formData.append("fecha_creacion", data.fecha_creacion);
+
+    AddDocumento(formData);
     handleClose();
     reset();
   };
@@ -83,13 +98,58 @@ export default function AddDocumentos({ modal, handleClose, empresas = [] }) {
       <form
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
+        encType="multipart/form-data"
         onKeyDown={(e) => {
-          if (e.code === "Enter" || e.code === "NumpadEnter") e.preventDefault();
+          if (e.code === "Enter" || e.code === "NumpadEnter")
+            e.preventDefault();
         }}
       >
         <DialogContent dividers>
           <Grid container spacing={2}>
-            {/* Campo nombre */}
+            <Grid item xs={12}>
+              <TextField
+                select
+                fullWidth
+                label="Selecciona la carpeta"
+                defaultValue=""
+                {...register("carpeta_id", {
+                  required: "Debes seleccionar una empresa",
+                })}
+                error={!!errors.carpeta_id}
+                helperText={errors.carpeta_id?.message}
+              >
+                <MenuItem value="">
+                  <em>-- Selecciona una carpeta --</em>
+                </MenuItem>
+                {carpetas.map((carpeta) => (
+                  <MenuItem key={carpeta.id} value={carpeta.id}>
+                    {carpeta.nombre}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                select
+                fullWidth
+                label="Selecciona el tipo de archivo"
+                defaultValue=""
+                {...register("tipo_archivo_id", {
+                  required: "Debes seleccionar una tipo de archivo",
+                })}
+                error={!!errors.tipo_archivo_id}
+                helperText={errors.tipo_archivo_id?.message}
+              >
+                <MenuItem value="">
+                  <em>-- Selecciona una tipo de archivo --</em>
+                </MenuItem>
+                {archivos.map((archivo) => (
+                  <MenuItem key={archivo.id} value={archivo.id}>
+                    {archivo.nombre}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 type="text"
@@ -106,28 +166,30 @@ export default function AddDocumentos({ modal, handleClose, empresas = [] }) {
                 helperText={errors.nombre?.message}
               />
             </Grid>
-
+            <Grid item xs={12}>
+              <input
+                type="file"
+                {...register("archivo", {
+                  required: "Debes subir un archivo",
+                })}
+                style={{ width: "100%" }}
+              />
+              {errors.archivo && (
+                <p style={{ color: "red", fontSize: "0.8rem" }}>
+                  {errors.archivo.message}
+                </p>
+              )}
+            </Grid>
             <Grid item xs={12}>
               <TextField
-                select
+                type="date"
                 fullWidth
-                label="Selecciona la empresa"
-                defaultValue=""
-                {...register("empresa_id", {
-                  required: "Debes seleccionar una empresa",
+                {...register("fecha_creacion", {
+                  required: "La fecha de creación es requerida",
                 })}
-                error={!!errors.empresa_id}
-                helperText={errors.empresa_id?.message}
-              >
-                <MenuItem value="">
-                  <em>-- Selecciona una empresa --</em>
-                </MenuItem>
-                {empresas.map((empresa) => (
-                  <MenuItem key={empresa.id} value={empresa.id}>
-                    {empresa.nombre}
-                  </MenuItem>
-                ))}
-              </TextField>
+                error={!!errors.fecha_creacion}
+                helperText={errors.fecha_creacion?.message}
+              />
             </Grid>
           </Grid>
         </DialogContent>

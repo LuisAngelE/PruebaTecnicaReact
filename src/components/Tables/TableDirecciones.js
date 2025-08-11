@@ -92,38 +92,48 @@ export default function DireccionesTable({ direcciones }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {direcciones.map((direccion) => (
-              <StyledTableRow key={direccion.id}>
-                <StyledTableCell data-label="ID">
-                  {direccion.id}
-                </StyledTableCell>
-                <StyledTableCell data-label="Dirección">
-                  {direccion.nombre}
-                </StyledTableCell>
-                <StyledTableCell data-label="Dirección">
-                  {direccion.empresa ? direccion.empresa.nombre : "Sin Empresa"}
-                </StyledTableCell>
-                <StyledTableCell data-label="Acciones">
-                  <IconButton
-                    size="small"
-                    onClick={() => handleClickOpen(direccion.id)}
-                  >
-                    <Tooltip title="Editar Dirección" placement="top">
-                      <EditIcon sx={{ color: "#e7a62f" }} />
-                    </Tooltip>
-                  </IconButton>
+            {direcciones.length > 0 ? (
+              direcciones.map((direccion) => (
+                <StyledTableRow key={direccion.id}>
+                  <StyledTableCell data-label="ID">
+                    {direccion.id}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Dirección">
+                    {direccion.nombre}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Dirección">
+                    {direccion.empresa
+                      ? direccion.empresa.nombre
+                      : "Sin Empresa"}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Acciones">
+                    <IconButton
+                      size="small"
+                      onClick={() => handleClickOpen(direccion.id)}
+                    >
+                      <Tooltip title="Editar Dirección" placement="top">
+                        <EditIcon sx={{ color: "#e7a62f" }} />
+                      </Tooltip>
+                    </IconButton>
 
-                  <IconButton
-                    size="small"
-                    onClick={() => DeleteDireccion(direccion.id)}
-                  >
-                    <Tooltip title="Eliminar Dirección" placement="top">
-                      <DeleteIcon sx={{ color: "#FF0000" }} />
-                    </Tooltip>
-                  </IconButton>
+                    <IconButton
+                      size="small"
+                      onClick={() => DeleteDireccion(direccion.id)}
+                    >
+                      <Tooltip title="Eliminar Dirección" placement="top">
+                        <DeleteIcon sx={{ color: "#FF0000" }} />
+                      </Tooltip>
+                    </IconButton>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))
+            ) : (
+              <TableRow>
+                <StyledTableCell colSpan={4} align="center">
+                  No hay direcciones disponibles
                 </StyledTableCell>
-              </StyledTableRow>
-            ))}
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainerResponsive>

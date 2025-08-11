@@ -1,7 +1,11 @@
 import React, { useReducer } from "react";
 import DocumentosContext from "./DocumentosContext";
 import DocumentosReducer from "./DocumentosReducer";
-import MethodGet, { MethodDelete, MethodPost, MethodPut } from "../../config/service";
+import MethodGet, {
+  MethodDelete,
+  MethodPost,
+  MethodPut,
+} from "../../config/service";
 import Swal from "sweetalert2";
 import {
   GET_ALL_DOCUMENTOS,
@@ -21,8 +25,22 @@ const DocumentosState = ({ children }) => {
 
   const [state, dispatch] = useReducer(DocumentosReducer, initialState);
 
-  const GetDocumentos = () => {
+  const GetDocumentos = (
+    nombre = "",
+    tipo_archivo_id = "",
+    carpeta_id = ""
+  ) => {
     let url = "/documentos";
+    const params = new URLSearchParams();
+
+    if (nombre.trim() !== "") params.append("nombre", nombre);
+    if (tipo_archivo_id !== "")
+      params.append("tipo_archivo_id", tipo_archivo_id);
+    if (carpeta_id !== "") params.append("carpeta_id", carpeta_id);
+
+    const queryString = params.toString();
+    if (queryString) url += `?${queryString}`;
+
     MethodGet(url)
       .then((res) => {
         dispatch({
@@ -36,9 +54,14 @@ const DocumentosState = ({ children }) => {
       });
   };
 
-  const AddDocumento = (data) => {
+  const AddDocumento = (formData) => {
     let url = "/documentos";
-    MethodPost(url, data)
+
+    MethodPost(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
       .then((res) => {
         dispatch({
           type: ADD_DOCUMENTOS,
@@ -48,9 +71,8 @@ const DocumentosState = ({ children }) => {
           title: "Agregado",
           text: "Documento agregado correctamente",
           icon: "success",
-        }).then(() => {
-          window.location.reload();
         });
+        GetDocumentos();
       })
       .catch((error) => {
         Swal.fire({
@@ -62,8 +84,20 @@ const DocumentosState = ({ children }) => {
   };
 
   const ChangeDocumento = (data) => {
-    let url = `/documentos/${data.id}`;
-    MethodPut(url, data)
+    let url = `/editdocumentos/${data.id}`;
+
+    const formData = new FormData();
+
+    if (data.archivo && data.archivo.length > 0) {
+      formData.append("archivo", data.archivo[0]);
+    }
+
+    formData.append("nombre", data.nombre);
+    formData.append("carpeta_id", data.carpeta_id);
+    formData.append("tipo_archivo_id", data.tipo_archivo_id);
+    formData.append("fecha_creacion", data.fecha_creacion);
+
+    MethodPost(url, formData)
       .then((res) => {
         dispatch({
           type: UPDATE_DOCUMENTOS,
@@ -73,9 +107,8 @@ const DocumentosState = ({ children }) => {
           title: "Documento modificado",
           text: res.data.message,
           icon: "success",
-        }).then(() => {
-          window.location.reload();
         });
+        GetDocumentos();
       })
       .catch((error) => {
         Swal.fire({

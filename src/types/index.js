@@ -1,14 +1,3 @@
-// Inicio de sesion
-export const types = {
-  MOSTRAR_ALERTA: "[AUTH] mostrar alerta",
-  OCULTAR_ALERTA: "[AUTH] ocultar alerta",
-  LOGIN_ERROR: "[AUTH] login error",
-  LOGIN_EXITOSO: "[AUTH] login existoso",
-  OBTENER_USUARIO: "[AUTH] obtener usuario",
-  CERRAR_SESION: "[AUTH] cerrar sesion",
-  INICIAR_SESION: "[AUTH] inicia sesion",
-  USER_CHANGEPASSWORD: "[AUTH] USER_CHANGEPASSWORD",
-};
 // Errores Api
 export const SHOW_ERRORS_API = "SHOW_ERRORS_API";
 // Empresas

@@ -23,12 +23,9 @@ const TipoArchivosReducer = (state, action) => {
       return {
         ...state,
         ErrorsApi: [],
-        archivos: state.archivos.map((archivo) => {
-          if (archivo.id === action.payload.id) {
-            return action.payload;
-          }
-          return archivo;
-        }),
+        archivos: state.archivos.map((archivo) =>
+          archivo.id === action.payload.id ? action.payload : archivo
+        ),
       };
     case DELETE_ARCHIVOS:
       return {

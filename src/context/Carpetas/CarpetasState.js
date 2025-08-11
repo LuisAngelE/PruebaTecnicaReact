@@ -52,9 +52,8 @@ const CarpetasState = ({ children }) => {
           title: "Agregada",
           text: "Carpeta agregada correctamente",
           icon: "success",
-        }).then(() => {
-          window.location.reload();
         });
+        GetCarpetas();
       })
       .catch((error) => {
         Swal.fire({
@@ -77,9 +76,8 @@ const CarpetasState = ({ children }) => {
           title: "Carpeta modificada",
           text: res.data.message,
           icon: "success",
-        }).then(() => {
-          window.location.reload();
         });
+        GetCarpetas();
       })
       .catch((error) => {
         Swal.fire({

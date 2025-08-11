@@ -59,75 +59,10 @@ const TableContainerResponsive = styled(TableContainer)(({ theme }) => ({
   },
 }));
 
-export default function TableDocumentos({ documentos }) {
+export default function TableDocumentos({ documentos, carpetas, archivos }) {
   const { DeleteDocumento } = useContext(DocumentosContext);
-  const { empresas, GetEmpresas } = useContext(EmpresasContext);
   const [modalUpdate, setModalUpdate] = useState(false);
   const [idDocumento, setIdDocumento] = useState(null);
-
-  // Datos fake para pruebas
-  // Datos fake para pruebas
-  const documentosFake = [
-    {
-      id: 1,
-      carpeta_id: 10,
-      tipo_archivo_id: 2,
-      nombre: "Informe Financiero 2024",
-      archivo: "informe_financiero_2024.pdf",
-      fecha_creacion: "2024-01-15T09:30:00Z",
-      created_at: "2024-01-15T09:30:00Z",
-      updated_at: "2024-02-01T14:20:00Z",
-      empresa: { id: 1, nombre: "TechCorp S.A." },
-    },
-    {
-      id: 2,
-      carpeta_id: 12,
-      tipo_archivo_id: 1,
-      nombre: "Manual de Seguridad",
-      archivo: "manual_seguridad.pdf",
-      fecha_creacion: "2024-03-02T10:00:00Z",
-      created_at: "2024-03-02T10:00:00Z",
-      updated_at: "2024-03-05T16:45:00Z",
-      empresa: { id: 2, nombre: "Construcciones del Norte" },
-    },
-    {
-      id: 3,
-      carpeta_id: 14,
-      tipo_archivo_id: 3,
-      nombre: "Plan de Marketing Q1",
-      archivo: "plan_marketing_q1.docx",
-      fecha_creacion: "2024-01-05T11:15:00Z",
-      created_at: "2024-01-05T11:15:00Z",
-      updated_at: "2024-01-20T08:40:00Z",
-      empresa: { id: 1, nombre: "TechCorp S.A." },
-    },
-    {
-      id: 4,
-      carpeta_id: 15,
-      tipo_archivo_id: 4,
-      nombre: "Contrato de Proveedor",
-      archivo: "contrato_proveedor.pdf",
-      fecha_creacion: "2024-02-10T14:00:00Z",
-      created_at: "2024-02-10T14:00:00Z",
-      updated_at: "2024-02-12T09:25:00Z",
-      empresa: { id: 3, nombre: "Alimentos del Valle" },
-    },
-    {
-      id: 5,
-      carpeta_id: 18,
-      tipo_archivo_id: 2,
-      nombre: "Reporte de Auditoría",
-      archivo: "reporte_auditoria.xlsx",
-      fecha_creacion: "2024-04-01T08:00:00Z",
-      created_at: "2024-04-01T08:00:00Z",
-      updated_at: "2024-04-03T17:55:00Z",
-      empresa: null, // Documento sin empresa asociada
-    },
-  ];
-
-  useEffect(() => {
-    GetEmpresas();
-  }, []);
 
   const handleClickOpen = (id) => {
     setModalUpdate(true);
@@ -139,10 +74,6 @@ export default function TableDocumentos({ documentos }) {
     setIdDocumento(null);
   };
 
-  // Si no se pasan documentos como prop, usamos los fake
-  const dataToRender =
-    documentos && documentos.length > 0 ? documentos : documentosFake;
-
   return (
     <>
       <TableContainerResponsive component={Paper} sx={{ overflowX: "auto" }}>
@@ -150,8 +81,8 @@ export default function TableDocumentos({ documentos }) {
           <TableHead>
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
-              <StyledTableCell>Carpeta ID</StyledTableCell>
-              <StyledTableCell>Tipo Archivo ID</StyledTableCell>
+              <StyledTableCell>Carpeta</StyledTableCell>
+              <StyledTableCell>Tipo de Archivo</StyledTableCell>
               <StyledTableCell>Nombre</StyledTableCell>
               <StyledTableCell>Archivo</StyledTableCell>
               <StyledTableCell>Fecha Creación</StyledTableCell>
@@ -159,47 +90,55 @@ export default function TableDocumentos({ documentos }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dataToRender.map((documento) => (
-              <StyledTableRow key={documento.id}>
-                <StyledTableCell data-label="ID">
-                  {documento.id}
-                </StyledTableCell>
-                <StyledTableCell data-label="Carpeta ID">
-                  {documento.carpeta_id}
-                </StyledTableCell>
-                <StyledTableCell data-label="Tipo Archivo ID">
-                  {documento.tipo_archivo_id}
-                </StyledTableCell>
-                <StyledTableCell data-label="Nombre">
-                  {documento.nombre}
-                </StyledTableCell>
-                <StyledTableCell data-label="Archivo">
-                  {documento.archivo}
-                </StyledTableCell>
-                <StyledTableCell data-label="Fecha Creación">
-                  {new Date(documento.fecha_creacion).toLocaleString()}
-                </StyledTableCell>
-                <StyledTableCell data-label="Acciones">
-                  <IconButton
-                    size="small"
-                    onClick={() => handleClickOpen(documento.id)}
-                  >
-                    <Tooltip title="Editar Documento" placement="top">
-                      <EditIcon sx={{ color: "#e7a62f" }} />
-                    </Tooltip>
-                  </IconButton>
+            {documentos.length > 0 ? (
+              documentos.map((documento) => (
+                <StyledTableRow key={documento.id}>
+                  <StyledTableCell data-label="ID">
+                    {documento.id}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Carpeta ID">
+                    {documento.carpeta?.nombre || "Sin carpeta"}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Tipo Archivo ID">
+                    {documento.tipo_archivo?.nombre || "Sin tipo"}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Nombre">
+                    {documento.nombre}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Archivo">
+                    {documento.archivo}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Fecha Creación">
+                    {new Date(documento.fecha_creacion).toLocaleString()}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Acciones">
+                    <IconButton
+                      size="small"
+                      onClick={() => handleClickOpen(documento.id)}
+                    >
+                      <Tooltip title="Editar Documento" placement="top">
+                        <EditIcon sx={{ color: "#e7a62f" }} />
+                      </Tooltip>
+                    </IconButton>
 
-                  <IconButton
-                    size="small"
-                    onClick={() => DeleteDocumento(documento.id)}
-                  >
-                    <Tooltip title="Eliminar Documento" placement="top">
-                      <DeleteIcon sx={{ color: "#FF0000" }} />
-                    </Tooltip>
-                  </IconButton>
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
+                    <IconButton
+                      size="small"
+                      onClick={() => DeleteDocumento(documento.id)}
+                    >
+                      <Tooltip title="Eliminar Documento" placement="top">
+                        <DeleteIcon sx={{ color: "#FF0000" }} />
+                      </Tooltip>
+                    </IconButton>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={7} align="center">
+                  No hay documentos disponibles
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainerResponsive>
@@ -209,7 +148,8 @@ export default function TableDocumentos({ documentos }) {
           open={modalUpdate}
           handleClose={handleClickClose}
           id={idDocumento}
-          empresas={empresas}
+          carpetas={carpetas}
+          archivos={archivos}
         />
       )}
     </>

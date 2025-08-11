@@ -8,7 +8,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import { Grid, MenuItem, TextField } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import TipoArchivosContext from "../../context/TipoArchivos/TipoArchivosContext";
 
@@ -46,23 +46,19 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function AddTipoArchivos({ modal, handleClose, empresas = [] }) {
-  const { AddTipoArchivo } = React.useContext(TipoArchivosContext);
-
+export default function AddTipoArchivos({ modal, handleClose = [] }) {
+  const { AddArchivo } = React.useContext(TipoArchivosContext);
   const {
     register,
     formState: { errors },
     handleSubmit,
     setValue,
   } = useForm();
-
   const reset = () => {
     setValue("nombre", "", { shouldDirty: true });
-    setValue("empresa_id", "", { shouldDirty: true });
   };
-
   const onSubmit = (data) => {
-    AddTipoArchivo(data);
+    AddArchivo(data);
     handleClose();
     reset();
   };
@@ -80,12 +76,12 @@ export default function AddTipoArchivos({ modal, handleClose, empresas = [] }) {
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
         onKeyDown={(e) => {
-          if (e.code === "Enter" || e.code === "NumpadEnter") e.preventDefault();
+          if (e.code === "Enter" || e.code === "NumpadEnter")
+            e.preventDefault();
         }}
       >
         <DialogContent dividers>
           <Grid container spacing={2}>
-            {/* Campo nombre */}
             <Grid item xs={12}>
               <TextField
                 type="text"
@@ -102,29 +98,6 @@ export default function AddTipoArchivos({ modal, handleClose, empresas = [] }) {
                 helperText={errors.nombre?.message}
               />
             </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                select
-                fullWidth
-                label="Selecciona la empresa"
-                defaultValue=""
-                {...register("empresa_id", {
-                  required: "Debes seleccionar una empresa",
-                })}
-                error={!!errors.empresa_id}
-                helperText={errors.empresa_id?.message}
-              >
-                <MenuItem value="">
-                  <em>-- Selecciona una empresa --</em>
-                </MenuItem>
-                {empresas.map((empresa) => (
-                  <MenuItem key={empresa.id} value={empresa.id}>
-                    {empresa.nombre}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
@@ -135,7 +108,7 @@ export default function AddTipoArchivos({ modal, handleClose, empresas = [] }) {
             fullWidth
             sx={{
               color: "black",
-              backgroundColor: "#ff8585",
+              backgroundColor: "#ed9595ff",
               "&:hover": { color: "black", backgroundColor: "#ff8585" },
             }}
           >

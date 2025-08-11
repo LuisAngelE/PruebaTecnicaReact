@@ -11,7 +11,7 @@ import MethodGet from "../../config/service";
 import CarpetasContext from "../../context/Carpetas/CarpetasContext";
 import { MenuItem } from "@mui/material";
 
-export default function EditCarpetas({ open, handleClose, id, empresas = [] }) {
+export default function EditCarpetas({ open, handleClose, id, areas = [] }) {
   const { ChangeCarpeta } = useContext(CarpetasContext);
   const [carpeta, setCarpeta] = useState(null);
 
@@ -29,7 +29,7 @@ export default function EditCarpetas({ open, handleClose, id, empresas = [] }) {
         setCarpeta(res.data);
 
         setValue("nombre", res.data.nombre || "", { shouldDirty: true });
-        setValue("empresa_id", res.data.empresa_id || "", { shouldDirty: true });
+        setValue("area_id", res.data.area_id || "", { shouldDirty: true });
       })
       .catch((error) => {
         console.error(error);
@@ -38,7 +38,7 @@ export default function EditCarpetas({ open, handleClose, id, empresas = [] }) {
 
   const reset = () => {
     setValue("nombre", "", { shouldDirty: true });
-    setValue("empresa_id", "", { shouldDirty: true });
+    setValue("area_id", "", { shouldDirty: true });
   };
 
   const onSubmit = (data) => {
@@ -82,20 +82,20 @@ export default function EditCarpetas({ open, handleClose, id, empresas = [] }) {
               <TextField
                 select
                 fullWidth
-                label="Selecciona la empresa"
-                defaultValue=""
-                {...register("empresa_id", {
-                  required: "Debes seleccionar una empresa",
+                label="Selecciona el área"
+                defaultValue={carpeta.area_id || ""}
+                {...register("area_id", {
+                  required: "Debes seleccionar un área",
                 })}
-                error={!!errors.empresa_id}
-                helperText={errors.empresa_id?.message}
+                error={!!errors.area_id}
+                helperText={errors.area_id?.message}
               >
                 <MenuItem value="">
-                  <em>-- Selecciona una empresa --</em>
+                  <em>-- Selecciona un área --</em>
                 </MenuItem>
-                {empresas.map((empresa) => (
-                  <MenuItem key={empresa.id} value={empresa.id}>
-                    {empresa.nombre}
+                {areas.map((area) => (
+                  <MenuItem key={area.id} value={area.id}>
+                    {area.nombre}
                   </MenuItem>
                 ))}
               </TextField>

@@ -21,13 +21,10 @@ const EmpresasReducer = (state, action) => {
     case UPDATE_EMPRESAS:
       return {
         ...state,
-        ErrorsAPI: [],
-        empresas: state.empresas.map((empresa) => {
-          if (empresa.id === action.payload.id) {
-            empresa = action.payload;
-          }
-          return empresa;
-        }),
+        ErrorsApi: [], 
+        empresas: state.empresas.map((empresa) =>
+          empresa.id === action.payload.id ? action.payload : empresa
+        ),
       };
     case DELETE_EMPRESAS:
       return {

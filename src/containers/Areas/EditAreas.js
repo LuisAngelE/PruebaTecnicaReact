@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useEffect, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import MethodGet from "../../config/service";
-import AreasContext from "../../context/Areas/AreasContext"; 
+import AreasContext from "../../context/Areas/AreasContext";
 import { MenuItem } from "@mui/material";
 
 export default function EditAreas({ open, handleClose, id, direcciones }) {
@@ -84,16 +84,16 @@ export default function EditAreas({ open, handleClose, id, direcciones }) {
               <TextField
                 select
                 fullWidth
-                label="Selecciona la drección"
-                defaultValue=""
+                label="Selecciona la dirección"
                 {...register("direccion_id", {
-                  required: "Debes seleccionar una drección",
+                  required: "Debes seleccionar una dirección",
                 })}
                 error={!!errors.direccion_id}
                 helperText={errors.direccion_id?.message}
+                defaultValue={area?.direccion_id || ""}
               >
                 <MenuItem value="">
-                  <em>-- Selecciona una drección --</em>
+                  <em>-- Selecciona una dirección --</em>
                 </MenuItem>
                 {direcciones.map((direccion) => (
                   <MenuItem key={direccion.id} value={direccion.id}>

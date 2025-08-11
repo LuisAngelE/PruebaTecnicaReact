@@ -53,9 +53,8 @@ const AreasState = ({ children }) => {
           title: "Agregada",
           text: "Área agregada correctamente",
           icon: "success",
-        }).then(() => {
-          window.location.reload();
         });
+        GetAreas();
       })
       .catch((error) => {
         Swal.fire({
@@ -77,9 +76,8 @@ const AreasState = ({ children }) => {
           title: "Modificada",
           text: "Área modificada correctamente",
           icon: "success",
-        }).then(() => {
-          window.location.reload();
         });
+        GetAreas();
       })
       .catch((error) => {
         Swal.fire({

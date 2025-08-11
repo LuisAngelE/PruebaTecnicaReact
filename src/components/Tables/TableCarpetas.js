@@ -63,57 +63,6 @@ export default function TableCarpetas({ carpetas, areas }) {
   const [modalUpdate, setModalUpdate] = useState(false);
   const [idCarpeta, setIdCarpeta] = useState(null);
 
-  // Datos fake para pruebas
-  const empresasFake = [
-    { id: 1, nombre: "TechCorp S.A." },
-    { id: 2, nombre: "Construcciones del Norte" },
-    { id: 3, nombre: "Alimentos del Valle" },
-  ];
-
-  const areasFake = [
-    {
-      id: 1,
-      nombre: "Recursos Humanos",
-      direccion: {
-        id: 1,
-        nombre: "Oficina Central",
-        empresa: empresasFake[0],
-      },
-    },
-    {
-      id: 2,
-      nombre: "Producción",
-      direccion: {
-        id: 2,
-        nombre: "Planta Industrial",
-        empresa: empresasFake[1],
-      },
-    },
-    {
-      id: 3,
-      nombre: "Marketing",
-      direccion: {
-        id: 3,
-        nombre: "Sucursal Norte",
-        empresa: empresasFake[2],
-      },
-    },
-  ];
-
-  const carpetasFake = [
-    { id: 1, nombre: "Contratos", area_id: 1 },
-    { id: 2, nombre: "Capacitaciones", area_id: 1 },
-    { id: 3, nombre: "Plan de Producción", area_id: 2 },
-    { id: 4, nombre: "Campañas Digitales", area_id: 3 },
-    { id: 5, nombre: "Sin Asignar", area_id: null },
-  ];
-
-  // Si no se pasan datos reales, usar los fake
-  const carpetasToRender = carpetas && carpetas.length > 0 ? carpetas : carpetasFake;
-  const areasToRender = areas && areas.length > 0 ? areas : areasFake;
-
-  const getArea = (area_id) => areasToRender.find((a) => a.id === area_id) || null;
-
   const handleClickOpen = (id) => {
     setModalUpdate(true);
     setIdCarpeta(id);
@@ -137,29 +86,48 @@ export default function TableCarpetas({ carpetas, areas }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {carpetasToRender.map((carpeta) => {
-              const area = getArea(carpeta.area_id);
-              return (
+            {carpetas.length > 0 ? (
+              carpetas?.map((carpeta) => (
                 <StyledTableRow key={carpeta.id}>
-                  <StyledTableCell data-label="ID">{carpeta.id}</StyledTableCell>
-                  <StyledTableCell data-label="Carpeta">{carpeta.nombre}</StyledTableCell>
-                  <StyledTableCell data-label="Área">{area ? area.nombre : "Sin Área"}</StyledTableCell>
+                  <StyledTableCell data-label="ID">
+                    {carpeta.id}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Carpeta">
+                    {carpeta.nombre}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Área">
+                    {carpeta.area?.nombre ||
+                      areas.find((a) => a.id === carpeta.area_id)?.nombre ||
+                      "Sin área"}
+                  </StyledTableCell>
                   <StyledTableCell data-label="Acciones">
-                    <IconButton size="small" onClick={() => handleClickOpen(carpeta.id)}>
-                      <Tooltip title="Editar Carpeta" placement="top">
+                    <Tooltip title="Editar Carpeta" placement="top">
+                      <IconButton
+                        size="small"
+                        onClick={() => handleClickOpen(carpeta.id)}
+                      >
                         <EditIcon sx={{ color: "#e7a62f" }} />
-                      </Tooltip>
-                    </IconButton>
+                      </IconButton>
+                    </Tooltip>
 
-                    <IconButton size="small" onClick={() => DeleteCarpeta(carpeta.id)}>
-                      <Tooltip title="Eliminar Carpeta" placement="top">
+                    <Tooltip title="Eliminar Carpeta" placement="top">
+                      <IconButton
+                        size="small"
+                        onClick={() => DeleteCarpeta(carpeta.id)}
+                      >
                         <DeleteIcon sx={{ color: "#FF0000" }} />
-                      </Tooltip>
-                    </IconButton>
+                      </IconButton>
+                    </Tooltip>
                   </StyledTableCell>
                 </StyledTableRow>
-              );
-            })}
+              ))
+            ) : (
+              <TableRow>
+                <StyledTableCell colSpan={4} align="center">
+                  No hay carpetas disponibles
+                </StyledTableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainerResponsive>
@@ -169,7 +137,7 @@ export default function TableCarpetas({ carpetas, areas }) {
           open={modalUpdate}
           handleClose={handleClickClose}
           id={idCarpeta}
-          areas={areasToRender}
+          areas={areas}
         />
       )}
     </>

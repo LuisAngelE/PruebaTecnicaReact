@@ -24,8 +24,8 @@ const DireccionesReducer = (state, action) => {
       return {
         ...state,
         ErrorsApi: [],
-        direcciones: state.direcciones.map((dir) =>
-          dir.id === action.payload.id ? action.payload : dir
+        direcciones: state.direcciones.map((direccion) =>
+          direccion.id === action.payload.id ? action.payload : direccion
         ),
       };
     case DELETE_DIRECCION:

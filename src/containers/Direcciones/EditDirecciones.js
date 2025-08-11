@@ -11,7 +11,12 @@ import MethodGet from "../../config/service";
 import DireccionesContext from "../../context/Direcciones/DireccionesContext";
 import { MenuItem } from "@mui/material";
 
-export default function EditDirecciones({ open, handleClose, id, empresas = [] }) {
+export default function EditDirecciones({
+  open,
+  handleClose,
+  id,
+  empresas = [],
+}) {
   const { ChangeDireccion } = useContext(DireccionesContext);
   const [direccion, setDireccion] = useState(null);
 
@@ -29,7 +34,9 @@ export default function EditDirecciones({ open, handleClose, id, empresas = [] }
         setDireccion(res.data);
 
         setValue("nombre", res.data.nombre || "", { shouldDirty: true });
-        setValue("empresa_id", res.data.empresa_id || "", { shouldDirty: true });
+        setValue("empresa_id", res.data.empresa_id || "", {
+          shouldDirty: true,
+        });
       })
       .catch((error) => {
         console.error(error);
@@ -83,12 +90,12 @@ export default function EditDirecciones({ open, handleClose, id, empresas = [] }
                 select
                 fullWidth
                 label="Selecciona la empresa"
-                defaultValue=""
                 {...register("empresa_id", {
                   required: "Debes seleccionar una empresa",
                 })}
                 error={!!errors.empresa_id}
                 helperText={errors.empresa_id?.message}
+                defaultValue={direccion?.empresa_id || ""} 
               >
                 <MenuItem value="">
                   <em>-- Selecciona una empresa --</em>

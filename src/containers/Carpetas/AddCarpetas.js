@@ -72,7 +72,11 @@ export default function AddCarpetas({ modal, handleClose, areas = [] }) {
   };
 
   return (
-    <BootstrapDialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={modal}>
+    <BootstrapDialog
+      onClose={handleClose}
+      aria-labelledby="customized-dialog-title"
+      open={modal}
+    >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
         Agregar Carpeta
       </BootstrapDialogTitle>
@@ -80,16 +84,17 @@ export default function AddCarpetas({ modal, handleClose, areas = [] }) {
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
         onKeyDown={(e) => {
-          if (e.code === "Enter" || e.code === "NumpadEnter") e.preventDefault();
+          if (e.code === "Enter" || e.code === "NumpadEnter")
+            e.preventDefault();
         }}
       >
         <DialogContent dividers>
           <Grid container spacing={2}>
-            {/* Campo nombre */}
             <Grid item xs={12}>
               <TextField
                 type="text"
                 fullWidth
+                variant="outlined"
                 name="nombre"
                 variant="outlined"
                 label="Nombre de la carpeta"

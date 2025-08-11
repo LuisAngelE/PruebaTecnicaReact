@@ -16,7 +16,6 @@ const AdminRoutes = () => {
       <Route exact path="/Carpetas" component={Carpetas} />
       <Route exact path="/Documentos" component={Documentos} />
       <Route exact path="/TipoArchivos" component={TipoArchivos} />
-      {/* <Route exact path="/DetailVisits/:id" component={DetailVisits} /> */}
     </Switch>
   );
 };

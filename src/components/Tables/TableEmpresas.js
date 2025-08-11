@@ -10,7 +10,7 @@ import { IconButton, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import EmpresasContext from "../../context/Empresas/EmpresasContext";
 import EditEmpresas from "../../containers/Empresas/EditEmpresas";
 
@@ -59,8 +59,12 @@ const TableContainerResponsive = styled(TableContainer)(({ theme }) => ({
   },
 }));
 
-export default function EmpresasTable({ empresas }) {
+export default function EmpresasTable() {
   const { DeleteEmpresa } = useContext(EmpresasContext);
+  const { empresas, GetEmpresas } = useContext(EmpresasContext);
+  useEffect(() => {
+    GetEmpresas();
+  }, []);
   const [modalUpdate, OpenModalUpdate] = useState(false);
   const [id_service, saveIdService] = useState(null);
   const handleClickOpen = (id) => {
@@ -71,7 +75,6 @@ export default function EmpresasTable({ empresas }) {
     OpenModalUpdate(false);
     saveIdService(null);
   };
-  console.log(empresas);
   return (
     <>
       <TableContainerResponsive component={Paper} sx={{ overflowX: "auto" }}>
@@ -84,33 +87,43 @@ export default function EmpresasTable({ empresas }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {empresas.map((empresa) => (
-              <StyledTableRow key={empresa.id}>
-                <StyledTableCell data-label="ID">{empresa.id}</StyledTableCell>
-                <StyledTableCell data-label="Nombre">
-                  {empresa.nombre}
-                </StyledTableCell>
-                <StyledTableCell data-label="Acciones">
-                  <IconButton
-                    size="small"
-                    onClick={() => handleClickOpen(empresa.id)}
-                  >
-                    <Tooltip title="Editar Empresa" placement="top">
-                      <EditIcon sx={{ color: "#e7a62f" }} />
-                    </Tooltip>
-                  </IconButton>
+            {empresas.length > 0 ? (
+              empresas.map((empresa) => (
+                <StyledTableRow key={empresa.id}>
+                  <StyledTableCell data-label="ID">
+                    {empresa.id}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Nombre">
+                    {empresa.nombre}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Acciones">
+                    <IconButton
+                      size="small"
+                      onClick={() => handleClickOpen(empresa.id)}
+                    >
+                      <Tooltip title="Editar Empresa" placement="top">
+                        <EditIcon sx={{ color: "#e7a62f" }} />
+                      </Tooltip>
+                    </IconButton>
 
-                  <IconButton
-                    size="small"
-                    onClick={() => DeleteEmpresa(empresa.id)}
-                  >
-                    <Tooltip title="Eliminar Empresa" placement="top">
-                      <DeleteIcon sx={{ color: "#FF0000" }} />
-                    </Tooltip>
-                  </IconButton>
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
+                    <IconButton
+                      size="small"
+                      onClick={() => DeleteEmpresa(empresa.id)}
+                    >
+                      <Tooltip title="Eliminar Empresa" placement="top">
+                        <DeleteIcon sx={{ color: "#FF0000" }} />
+                      </Tooltip>
+                    </IconButton>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={3} align="center">
+                  No hay empresas disponibles
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainerResponsive>

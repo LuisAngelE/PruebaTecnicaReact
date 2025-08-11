@@ -53,9 +53,8 @@ const DireccionesState = ({ children }) => {
           title: "Agregada",
           text: "Dirección agregada correctamente",
           icon: "success",
-        }).then(() => {
-          window.location.reload();
         });
+        GetDirecciones(); 
       })
       .catch((error) => {
         Swal.fire({
@@ -77,9 +76,8 @@ const DireccionesState = ({ children }) => {
           title: "Modificada",
           text: "Dirección modificada correctamente",
           icon: "success",
-        }).then(() => {
-          window.location.reload();
         });
+        GetDirecciones();
       })
       .catch((error) => {
         Swal.fire({
